@@ -10,28 +10,34 @@
         <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Link</a>
+        <a class="nav-link" href="#">Products</a>
       </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dropdown
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
+       <li class="nav-item">
+        <a class="nav-link" href="#">New Arrivals</a>
       </li>
-      <li class="nav-item">
-      <%  if user_signed_in? %>
-       <%= button_to "logout", destroy_user_session_path, method: :delete, class: "btn btn-warning" %>
-      </li>
-      <% end %>
+
+
     </ul>
     <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
+     <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+      <%  if user_signed_in? %>
+       <%= button_to "logout", destroy_user_session_path, method: :delete, class: "btn btn-warning" %>
+      </li>
+      <% else %>
+       <li class="nav-item">
+
+        <a href="/users/sign_in" class="btn btn-primary">Login</a>
+       </li>
+
+        <li class="nav-item">
+
+        <%= link_to "Become Seller", new_seller_path, class: "btn btn-success ml-2" %>
+       </li>
+      <% end %>
+      <ul>
   </div>
 </nav>

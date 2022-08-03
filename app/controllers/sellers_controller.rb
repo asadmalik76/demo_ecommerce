@@ -2,7 +2,6 @@
 
 class SellersController < Users::RegistrationsController
 
-  after_action :assign_role, only:[:create]
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :validate_type_params, only: [:new]
   # before_action :configure_account_update_params, only: [:update]
@@ -74,11 +73,9 @@ class SellersController < Users::RegistrationsController
   private
 
   def after_sign_up_path_for(resource)
-    resource.add_role :seller
+    # resource.add_role :seller
     root_path
   end
 
-  def assign_role
-    current_user.add_role :seller
-  end
+
 end
