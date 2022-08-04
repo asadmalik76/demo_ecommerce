@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Category ActiveRecord
 class Category < ApplicationRecord
   has_many :product
 
@@ -5,7 +8,6 @@ class Category < ApplicationRecord
   before_save :add_slug
 
   def add_slug
-    self.slug = self.name.parameterize
+    self.slug = name.parameterize
   end
-
 end

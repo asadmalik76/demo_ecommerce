@@ -1,6 +1,12 @@
+# frozen_string_literal: true
+
+# Products CRUD
 class ProductsController < ApplicationController
+  before_action :authenticate_user!
+  before_action :load_product, only: %i[edit update destroy]
+
   def index
-    @products = Product.all
+    @products = current_user.products.all
   end
 
   def new
@@ -17,12 +23,9 @@ class ProductsController < ApplicationController
     end
   end
 
-  def edit
-    @product = Product.find(params[:id])
-  end
+  def edit; end
 
   def update
-    @product = Product.find(params[:id])
     if @product.update(product_params)
       flash[:success] = 'Product updated'
       redirect_to products_path
@@ -32,7 +35,6 @@ class ProductsController < ApplicationController
   end
 
   def destroy
-    @product=Product.find(params[:id])
     @product.destroy
     flash[:success] = 'Product Destroyed'
     redirect_to products_path
@@ -42,5 +44,9 @@ class ProductsController < ApplicationController
 
   def product_params
     params.require(:product).permit(:name, :description, :price, :quantity, :status, :category_id, :brand_id)
+  end
+
+  def load_product
+    @product = Product.find(params[:id])
   end
 end

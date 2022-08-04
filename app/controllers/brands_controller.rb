@@ -1,4 +1,9 @@
+# frozen_string_literal: true
+
+# CRUD for brands
 class BrandsController < ApplicationController
+  before_action :authenticate_user!
+  before_action :load_brand, only: %i[edit update destroy]
 
   def index
     @brands = Brand.all
@@ -18,12 +23,9 @@ class BrandsController < ApplicationController
     end
   end
 
-  def edit
-    @brand = Brand.find(params[:id])
-  end
+  def edit; end
 
   def update
-    @brand = Brand.find(params[:id])
     if @brand.update(brand_params)
       flash[:success] = 'Brand updated'
       redirect_to brands_path
@@ -33,7 +35,6 @@ class BrandsController < ApplicationController
   end
 
   def destroy
-    @brand = Brand.find(params[:id])
     @brand.destroy
     flash[:success] = 'Brand Destroyed'
     redirect_to brands_path
@@ -45,4 +46,7 @@ class BrandsController < ApplicationController
     params.require(:brand).permit(:name)
   end
 
+  def load_brand
+    @brand = Brand.find(params[:id])
+  end
 end

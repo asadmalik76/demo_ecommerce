@@ -1,4 +1,10 @@
+# frozen_string_literal: true
+
+# CRUD for Category
 class CategoriesController < ApplicationController
+  before_action :authenticate_user!
+  before_action :load_category, only: %i[edit update destroy]
+
   def index
     @categories = Category.all
   end
@@ -17,12 +23,9 @@ class CategoriesController < ApplicationController
     end
   end
 
-  def edit
-    @category = Category.find(params[:id])
-  end
+  def edit; end
 
   def update
-    @category = Category.find(params[:id])
     if @category.update(category_params)
       flash[:success] = 'Category updated'
       redirect_to categories_path
@@ -32,7 +35,6 @@ class CategoriesController < ApplicationController
   end
 
   def destroy
-    @category = Category.find(params[:id])
     @category.destroy
     flash[:success] = 'Category Destroyed'
     redirect_to categories_path
@@ -42,5 +44,9 @@ class CategoriesController < ApplicationController
 
   def category_params
     params.require(:category).permit(:name)
+  end
+
+  def load_category
+    @category = Category.find(params[:id])
   end
 end
