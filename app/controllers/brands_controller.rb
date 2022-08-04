@@ -7,14 +7,17 @@ class BrandsController < ApplicationController
 
   def index
     @brands = Brand.all
+    authorize @brands
   end
 
   def new
     @brand = Brand.new
+    authrize @brand
   end
 
   def create
     @brand = Brand.new(brand_params)
+    authorize @brand
     if @brand.save
       flash[:success] = 'New Brand created'
       redirect_to brands_path
@@ -48,5 +51,6 @@ class BrandsController < ApplicationController
 
   def load_brand
     @brand = Brand.find(params[:id])
+    authorize @brand
   end
 end

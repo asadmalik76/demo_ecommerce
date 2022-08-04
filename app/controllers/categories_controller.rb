@@ -7,14 +7,17 @@ class CategoriesController < ApplicationController
 
   def index
     @categories = Category.all
+    authorize @categories
   end
 
   def new
     @category = Category.new
+    authorize @category
   end
 
   def create
     @category = Category.new(category_params)
+    authorize @category
     if @category.save
       flash[:success] = 'New category created'
       redirect_to categories_path
@@ -48,5 +51,6 @@ class CategoriesController < ApplicationController
 
   def load_category
     @category = Category.find(params[:id])
+    authorize @category
   end
 end

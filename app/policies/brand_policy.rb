@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
-# Products Authorization policy for the user
-class ProductPolicy
+# BrandPolicy
+
+class BrandPolicy
   attr_reader :user, :record
 
   def initialize(user, record)
@@ -14,32 +15,31 @@ class ProductPolicy
   end
 
   def show?
-    false
+    user.has_role? :seller
   end
 
   def create?
-    user.has_role? :seller and record.user == user
+    user.has_role? :seller
   end
 
   def new?
-    user.has_role? :seller and record.user == user
+    user.has_role? :seller
   end
 
   def update?
-    user.has_role? :seller and record.user == user
+    user.has_role? :seller
   end
 
   def edit?
-    user.has_role? :seller and record.user == user
+    user.has_role? :seller
   end
 
   def destroy?
-    user.has_role? :seller and record.user == user
+    user.has_role? :seller
   end
 
   # frozen_string_literal: true
-
-  # Scope class
+  # BrandPolicy Scope
   class Scope
     def initialize(user, scope)
       @user = user

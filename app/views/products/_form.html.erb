@@ -37,6 +37,19 @@
   </div>
 
   <div class="col-md-6">
+    <div class="form-group">
+  <%= form.label :cover_image %><br />
+<%= form.file_field :main_image %>
+  </div></div>
+
+  <div class="col-md-6">
+    <div class="form-group">
+  <%= form.label :images %><br />
+<%= form.file_field :images, multiple: true %>
+  </div></div>
+
+
+  <div class="col-md-6">
   <div class="form-group">
     <%= form.label :brand_id %><br>
     <%= form.select(:brand_id, options_for_select(Brand.all.map{|c|[c.name, c.id]}), {}, { :class => 'form-control' }) %>

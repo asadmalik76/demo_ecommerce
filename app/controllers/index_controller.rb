@@ -2,5 +2,11 @@
 
 # Website Pages
 class IndexController < ApplicationController
-  def index; end
+  def index
+    @products = Product.all
+  end
+
+  def unauthorized
+    render 'errors/unauthorized'
+  end
 end
