@@ -4,16 +4,12 @@
 class BrandsController < ApplicationController
   before_action :authenticate_user!
   before_action :load_brand, only: %i[edit update destroy]
+  before_action :load_brands, only: %i[index]
+  before_action :load_new_brand, only: %i[new]
 
-  def index
-    @brands = Brand.all
-    authorize @brands
-  end
+  def index; end
 
-  def new
-    @brand = Brand.new
-    authrize @brand
-  end
+  def new; end
 
   def create
     @brand = Brand.new(brand_params)
@@ -53,4 +49,15 @@ class BrandsController < ApplicationController
     @brand = Brand.find(params[:id])
     authorize @brand
   end
+
+  def load_brands
+    @brands = Brand.all
+    authorize @brands
+  end
+
+  def load_new_brand
+    @brand = Brand.new
+    authorize @brand
+  end
+
 end

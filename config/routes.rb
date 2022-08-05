@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   resources :categories
   resources :brands
   resources :products
+  resource :carts
+  resources :cart_items
   get '/unauthorized', to: 'index#unauthorized'
   root 'index#index'
 end

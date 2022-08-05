@@ -4,11 +4,9 @@
 class ProductsController < ApplicationController
   before_action :authenticate_user!
   before_action :load_product, only: %i[edit update destroy]
+  before_action :load_seller_products, only: %i[index]
 
-  def index
-    @products = current_user.products.all
-    authorize @products
-  end
+  def index; end
 
   def new
     @product = Product.new
@@ -56,5 +54,10 @@ class ProductsController < ApplicationController
   def load_product
     @product = Product.find(params[:id])
     authorize @product
+  end
+
+  def load_seller_products
+    @products = current_user.products.all
+    authorize @products
   end
 end

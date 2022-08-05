@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Cetegory Policy Definition
 class CategoryPolicy
   attr_reader :user, :record
 
@@ -36,6 +37,7 @@ class CategoryPolicy
     user.has_role? :seller
   end
 
+  # Category Policy Scope
   class Scope
     def initialize(user, scope)
       @user = user

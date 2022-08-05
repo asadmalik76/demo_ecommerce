@@ -1,4 +1,4 @@
-<%= render "partials/slider" %>
+<%= render "shared/slider" %>
 <div class="container-fluid">
 <section class="product mt-5 mb-5">
 <div class="row">
@@ -7,7 +7,7 @@
 <div class="col-md-8">
 <div class="row">
 <% @products.each do |product|%>
-<%= render "partials/product", model: product %>
+<%= render "shared/product", model: product %>
 <% end %>
 </div>
 

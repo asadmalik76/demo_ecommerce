@@ -42,12 +42,19 @@
 <%= form.file_field :main_image %>
   </div></div>
 
+
+
   <div class="col-md-6">
     <div class="form-group">
   <%= form.label :images %><br />
 <%= form.file_field :images, multiple: true %>
   </div></div>
 
+<% if @product.images.attached? %>
+  <% @product.images.each do |ph| %>
+    <%= form.hidden_field :images, multiple: true, value: ph.signed_id %>
+  <% end %>
+<% end %>
 
   <div class="col-md-6">
   <div class="form-group">
@@ -62,6 +69,7 @@
     <%= form.select(:status,  ["available", "outofstock", "draft"], {}, { :class => 'form-control' }) %>
   </div>
   </div>
+
 
   <div class="col-md-6">
   <div class="form-group">

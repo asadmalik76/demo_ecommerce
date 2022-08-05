@@ -37,8 +37,6 @@ class ProductPolicy
     user.has_role? :seller and record.user == user
   end
 
-  # frozen_string_literal: true
-
   # Scope class
   class Scope
     def initialize(user, scope)
