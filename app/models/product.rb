@@ -6,6 +6,8 @@ class Product < ApplicationRecord
   belongs_to :category
   belongs_to :brand
   belongs_to :user
+  has_one_attached :main_image
+  has_many_attached :images
   validates :description, length: { minimum: 50, message: ' must be greater than 50 characters' }
   before_save :add_slug
   after_create :add_sku

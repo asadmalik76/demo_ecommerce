@@ -4,17 +4,16 @@
 class BrandsController < ApplicationController
   before_action :authenticate_user!
   before_action :load_brand, only: %i[edit update destroy]
+  before_action :load_brands, only: %i[index]
+  before_action :load_new_brand, only: %i[new]
 
-  def index
-    @brands = Brand.all
-  end
+  def index; end
 
-  def new
-    @brand = Brand.new
-  end
+  def new; end
 
   def create
     @brand = Brand.new(brand_params)
+    authorize @brand
     if @brand.save
       flash[:success] = 'New Brand created'
       redirect_to brands_path
@@ -48,5 +47,17 @@ class BrandsController < ApplicationController
 
   def load_brand
     @brand = Brand.find(params[:id])
+    authorize @brand
   end
+
+  def load_brands
+    @brands = Brand.all
+    authorize @brands
+  end
+
+  def load_new_brand
+    @brand = Brand.new
+    authorize @brand
+  end
+
 end

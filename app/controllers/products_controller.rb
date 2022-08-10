@@ -4,13 +4,17 @@
 class ProductsController < ApplicationController
   before_action :authenticate_user!
   before_action :load_product, only: %i[edit update destroy]
+  before_action :load_seller_products, only: %i[index]
 
-  def index
-    @products = current_user.products.all
-  end
+  def index; end
 
   def new
     @product = Product.new
+  end
+
+  def show
+    @product = Product.find_by(slug: params[:id])
+    render 'index/product'
   end
 
   def create
@@ -43,10 +47,17 @@ class ProductsController < ApplicationController
   private
 
   def product_params
-    params.require(:product).permit(:name, :description, :price, :quantity, :status, :category_id, :brand_id)
+    params.require(:product).permit(:name, :description, :price, :quantity, :status, :category_id, :brand_id,
+                                    :main_image, images: [])
   end
 
   def load_product
     @product = Product.find(params[:id])
+    authorize @product
+  end
+
+  def load_seller_products
+    @products = current_user.products.all
+    authorize @products
   end
 end

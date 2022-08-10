@@ -4,17 +4,16 @@
 class CategoriesController < ApplicationController
   before_action :authenticate_user!
   before_action :load_category, only: %i[edit update destroy]
+  before_action :load_categories, only: %i[index]
+  before_action :load_new_category, only: %i[new]
 
-  def index
-    @categories = Category.all
-  end
+  def index; end
 
-  def new
-    @category = Category.new
-  end
+  def new; end
 
   def create
     @category = Category.new(category_params)
+    authorize @category
     if @category.save
       flash[:success] = 'New category created'
       redirect_to categories_path
@@ -48,5 +47,16 @@ class CategoriesController < ApplicationController
 
   def load_category
     @category = Category.find(params[:id])
+    authorize @category
+  end
+
+  def load_categories
+    @categories = Category.all
+    authorize @categories
+  end
+
+  def load_new_category
+    @category = Category.new
+    authorize @category
   end
 end
