@@ -11,6 +11,7 @@ gem 'devise'
 gem "pundit"
 gem "rolify"
 gem 'rubocop'
+gem 'stripe'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"

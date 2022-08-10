@@ -16,6 +16,11 @@ Rails.application.routes.draw do
   resources :products
   resource :carts
   resources :cart_items
+  resources :orders
+  resources :charges, only: [:new, :create]
+  get '/decreament', to: 'cart_items#decreament'
+  get '/increament', to: 'cart_items#increament'
+  get '/remove_item', to: 'cart_items#remove_item'
   get '/unauthorized', to: 'index#unauthorized'
   root 'index#index'
 end

@@ -12,8 +12,9 @@ class CartsController < ApplicationController
   def create
     @cart = Cart.new
     if user_signed_in?
-      @cart = Cart.new(user_id: current_user.id)
+      @cart.user_id = current_user.id
       session[:cart_id] = @cart.id
+      @cart.save
     elsif @cart.create
       session[:cart_id] = @cart.id
     end
