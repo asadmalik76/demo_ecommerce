@@ -3,20 +3,13 @@
 # CartsController
 class CartsController < ApplicationController
   def show
-    @cart = Cart.find(session[:cart_id])
-    @cart_items = @cart.cart_items
+    if session[:cart_id]
+      @cart = Cart.find(session[:cart_id])
+      @cart_items = @cart.cart_items
+    end
   end
 
   def new; end
 
-  def create
-    @cart = Cart.new
-    if user_signed_in?
-      @cart.user_id = current_user.id
-      session[:cart_id] = @cart.id
-      @cart.save
-    elsif @cart.create
-      session[:cart_id] = @cart.id
-    end
-  end
+  def create; end
 end

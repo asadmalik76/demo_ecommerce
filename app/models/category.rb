@@ -2,7 +2,7 @@
 
 # Category ActiveRecord
 class Category < ApplicationRecord
-  has_many :product
+  has_many :products
 
   validates :name, uniqueness: { message: 'Already exists' }
   before_save :add_slug

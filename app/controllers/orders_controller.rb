@@ -32,13 +32,10 @@ class OrdersController < ApplicationController
     @order.user_id = current_user.id
     @order.save
     @total_amount = 0
-    @cart_items = @cart.cart_items
-    @cart_items.each do |item|
+    @cart.cart_items.each do |item|
       @order_items = OrderItem.new
-      @order_items.order_id = @order.id
-      @order_items.product_id = item.product_id
-      @order_items.quantity = item.quantity
-      @order_items.status = 'draft'
+      @order_items.assign_attributes({ order_id: @order.id, product_id: item.product_id,
+                                       quantity: item.quantity, status: 'draft' })
       @total_amount = item.product.price * item.quantity + @total_amount
       @order_items.save
     end
@@ -54,8 +51,4 @@ class OrdersController < ApplicationController
       redirect_to root_path
     end
   end
-
-  # def order_params
-  #   params.require(:order).permit(:order_id)
-  # end
 end

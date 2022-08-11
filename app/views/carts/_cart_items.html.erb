@@ -19,9 +19,9 @@
   <tr>
   <td>#</td>
   <% if item.product.main_image.attached? %>
-  <td style="width:20px"><%= image_tag product.main_image, class: "img img-thumbnail" %></td>
+      <td style="width:20px"><%= image_tag product.main_image, class: "img img-thumbnail" %></td>
   <% else %>
-  <td><p>No image</p></td>
+      <td><p>No image</p></td>
   <% end %>
 
   <td><%= item.product.name %></td>

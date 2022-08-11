@@ -5,13 +5,17 @@
 class CartItemsController < ApplicationController
   before_action :load_cart, only: %i[create]
   before_action :load_item, only: %i[create]
+  before_action :load_cart_item, only: %i[increament decreament remove_item]
+
+
   def index; end
 
   def new; end
 
+  # TODO: Improve this method
   def create
-    if @cart.cart_items.find_by(product_id: @item.id).present?
-      @cart_item = CartItem.find_by(cart_id: @cart.id, product_id: @item.id)
+    if @cart.cart_items.find_by(product_id: @item.id)
+      @cart_item = @cart.cart_items.find_by(product_id: @item.id)
       @cart_item.quantity += 1
       @cart_item.save
     else
@@ -22,19 +26,16 @@ class CartItemsController < ApplicationController
   end
 
   def increament
-    @cart_item = CartItem.find(params[:id])
     @cart_item.quantity += 1
     @cart_item.save
   end
 
   def decreament
-    @cart_item = CartItem.find(params[:id])
     @cart_item.quantity -= 1
     @cart_item.save
   end
 
   def remove_item
-    @cart_item = CartItem.find(params[:id])
     if @cart_item.destroy
       render plain: 'Deleted', status: 200
     else
@@ -44,6 +45,7 @@ class CartItemsController < ApplicationController
 
   private
 
+  # TODO: Improve this
   def load_cart
     if session[:cart_id]
       @cart = Cart.find(session[:cart_id])
@@ -61,5 +63,9 @@ class CartItemsController < ApplicationController
 
   def load_item
     @item = Product.find(params[:id])
+  end
+
+  def load_cart_item
+    @cart_item = CartItem.find(params[:id])
   end
 end
