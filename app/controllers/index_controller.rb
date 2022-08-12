@@ -2,11 +2,42 @@
 
 # Website Pages
 class IndexController < ApplicationController
-  def index
-    @products = Product.all
-  end
+
+  before_action :load_categories, only: %i[index all_products brand_products category_products]
+  before_action :load_brands, only: %i[index all_products brand_products category_products]
+  before_action :load_products, only: %i[index all_products brand_products category_products]
+
+  def index; end
 
   def unauthorized
     render 'errors/unauthorized'
+  end
+
+  def all_products; end
+
+  def brand_products
+    @brand = Brand.find_by(slug: params[:slug])
+    @products = @brand.products
+    render 'index/all_products'
+  end
+
+  def category_products
+    @category = Category.find_by(slug: params[:slug])
+    @products = @category.products
+    render 'index/all_products'
+  end
+
+  private
+
+  def load_categories
+    @categories = Category.all
+  end
+
+  def load_brands
+    @brands = Brand.all
+  end
+
+  def load_products
+    @products = Product.all
   end
 end

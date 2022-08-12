@@ -7,10 +7,12 @@ ruby "2.7.0"
 gem "rails", "~> 7.0.3", ">= 7.0.3.1"
 
 gem "byebug"
+gem 'webpacker'
 gem 'devise'
 gem "pundit"
 gem "rolify"
 gem 'rubocop'
+gem 'stripe'
 
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
