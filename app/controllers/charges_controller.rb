@@ -11,6 +11,7 @@ class ChargesController < ApplicationController
     if @charge.paid || @charge.status == 'succeeded'
       @order = Order.find_by(order_id: session[:order_id])
       @order.status = 'processing'
+      byebug
       @order.save
       render 'orders/success'
     else

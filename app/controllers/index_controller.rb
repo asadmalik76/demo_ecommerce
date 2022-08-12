@@ -40,4 +40,9 @@ class IndexController < ApplicationController
   def load_products
     @products = Product.all
   end
+
+  def profile
+
+  end
+
 end

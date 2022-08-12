@@ -14,12 +14,9 @@
       }
     });
   }
-
-
-  window.increament= function (id){
+  window.increament = function(id) {
       var quantity = $('#quantity'+id).val();
       $('#quantity'+id).val(quantity);
-         if(quantity>0){
           $.ajaxSetup({
       headers: {
         'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
@@ -34,7 +31,6 @@
       $('#quantity'+id).val(quantity);
         }
       });
-      }
   }
 
   window.decreament = function(id) {
@@ -50,11 +46,30 @@
         method: 'GET',
         data: { id: id },
         success: function (result) {
-
           quantity = quantity - 1;
           $('#quantity' + id).val(quantity);
         }
       });
+    }
+    if (quantity > 0){
+      if (confirm('Do you want to remove this item?')) {
+        $.ajaxSetup({
+          headers: {
+            'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')
+          }
+        });
+        $.ajax({
+          url: '/remove_item',
+          method: 'GET',
+          data: { id: id },
+          success: function (result) {
+            if (result == 'Deleted') {
+              $('#product' + id).remove();
+            }
+          }
+        });
+      }
+
     }
   }
 

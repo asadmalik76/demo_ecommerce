@@ -30,7 +30,10 @@
 
         <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <%=  current_user.first_name + " " + current_user.last_name %>
+       <div class="profile-img">
+        <%= image_tag current_user.avatar, class: "rounded-circle", style: "width: 20px; height:20px" %>
+       </div>
+          <%=  current_user.full_name %>
         </a>
         <% if current_user.has_role? :seller %>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -39,6 +42,7 @@
             <%= link_to "Brands", brands_path, class: "dropdown-item" %>
             <%= link_to "Orders", orders_path, class: "dropdown-item" %>
             <a class="dropdown-item" href="#">My Orders</a>
+            <%= link_to "Profile", edit_user_registration_path() , class: "dropdown-item" %>
           </div>
         <% else %>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
