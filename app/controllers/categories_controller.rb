@@ -47,7 +47,7 @@ class CategoriesController < ApplicationController
 
   def load_category
     @category = Category.find(params[:id])
-    authorize @category
+  authorize @category
   end
 
   def load_categories

@@ -9,4 +9,6 @@
 # Role.create!(name: 'buyer')
 # Role.create!(name: 'seller')
 
-Brand.create!(name: 'samsung')
+Coupon.create(code: 'Devntech', discount: 0.3)
+Coupon.create(code: 'Pak14', discount: 0.2)
+Coupon.create(code: 'E20', discount: 0.5)

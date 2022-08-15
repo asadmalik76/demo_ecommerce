@@ -278,3 +278,7 @@ label.radio input:checked+span::before {
     margin: 20px 0;
     display: inline-block;}
 	.contant_box_404{ margin-top:-50px;}
+  .profile-img img {
+    width: 20px;
+    height: 20px;
+    }

@@ -12,6 +12,7 @@ class ChargesController < ApplicationController
       @order = Order.find_by(order_id: session[:order_id])
       @order.status = 'processing'
       @order.save
+      @cart = session.delete(:cart_id)
       render 'orders/success'
     else
       redirect_to orders_path
