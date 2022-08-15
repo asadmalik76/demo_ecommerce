@@ -5,6 +5,7 @@ class ProductsController < ApplicationController
   before_action :authenticate_user!
   before_action :load_product, only: %i[edit update destroy]
   before_action :load_seller_products, only: %i[index]
+  # before_action :load_commentable_by_slug, only: %i[edit update destroy]
 
   def index; end
 
@@ -14,6 +15,8 @@ class ProductsController < ApplicationController
 
   def show
     @product = Product.find_by(slug: params[:id])
+    @comments = @product.comments
+    @comment = Comment.new
     render 'index/product'
   end
 
@@ -60,4 +63,5 @@ class ProductsController < ApplicationController
     @products = current_user.products.all
     authorize @products
   end
+
 end

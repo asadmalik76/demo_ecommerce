@@ -8,6 +8,7 @@ class Product < ApplicationRecord
   belongs_to :user
   has_one_attached :main_image
   has_many_attached :images
+  has_many :comments
   validates :description, length: { minimum: 50, message: ' must be greater than 50 characters' }
   before_save :add_slug
   before_create :add_sku
@@ -18,4 +19,5 @@ class Product < ApplicationRecord
   def add_slug
     self.slug = name.parameterize + id.to_s
   end
+
 end

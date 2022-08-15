@@ -1,3 +1,4 @@
+console.log("Thidd d dd dddsd test")
 import { Application } from "stimulus"
 import { definitionsFromContext } from "stimulus/webpack-helpers"
 

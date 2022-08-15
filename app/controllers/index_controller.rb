@@ -41,8 +41,4 @@ class IndexController < ApplicationController
     @products = Product.all
   end
 
-  def profile
-
-  end
-
 end

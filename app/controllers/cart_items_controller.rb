@@ -6,8 +6,6 @@ class CartItemsController < ApplicationController
   before_action :load_cart, only: %i[create]
   before_action :load_item, only: %i[create]
   before_action :load_cart_item, only: %i[increament decreament remove_item]
-
-
   def index; end
 
   def new; end
@@ -18,10 +16,17 @@ class CartItemsController < ApplicationController
       @cart_item = @cart.cart_items.find_by(product_id: @item.id)
       @cart_item.quantity += 1
       @cart_item.save
+      render plain: 'success'
     else
-      @cart_item = CartItem.create(
+      @cart_item = CartItem.new(
         cart_id: @cart.id, product_id: @item.id, quantity: 1
       )
+      authorize @cart_item
+      if @cart_item.save
+        render plain: 'success'
+      else
+        render plain: 'failed'
+      end
     end
   end
 
@@ -52,7 +57,7 @@ class CartItemsController < ApplicationController
     elsif user_signed_in?
       @cart = Cart.create(user_id: current_user.id)
       session[:cart_id] = @cart.id
-    elsif @cart.create
+    elsif @cart = Cart.create
       session[:cart_id] = @cart.id
     end
   end

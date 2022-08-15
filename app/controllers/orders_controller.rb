@@ -30,9 +30,25 @@ class OrdersController < ApplicationController
       @order_items.save
     end
     @order.amount = @total_amount
+    @order.status = 'draft'
     @order.save
     session['order_id'] = @order.order_id
     redirect_to order_path(@order.order_id)
+  end
+
+  def myorders
+    @orders = current_user.orders.all
+    render 'orders/myorders'
+  end
+
+  def apply_coupon
+    @coupon = Coupon.find_by(code: coupon_params[:code])
+    @order = Order.find_by(order_id: coupon_params[:order_id])
+    @discount = @order.amount * @coupon.discount
+    @order.amount = @order.amount - @discount
+    @order.discount = @discount
+    @order.save
+    redirect_to order_path(@order, order_id: @order.order_id)
   end
 
   private
@@ -58,4 +74,9 @@ class OrdersController < ApplicationController
   def order_params
     params.require(:order).permit(:order_id)
   end
+
+  def coupon_params
+    params.permit(:code, :order_id)
+  end
+
 end

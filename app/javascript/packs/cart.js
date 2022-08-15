@@ -1,3 +1,4 @@
+const { end } = require("@popperjs/core");
 
   window.add_to_cart = function(id) {
     $.ajaxSetup({
@@ -10,7 +11,13 @@
       method: 'POST',
       data: { id: id },
       success: function (result) {
-        alert("OK");
+        if (result == 'success') {
+        alert("Item has been successfully added")
+      }
+        else{
+          alert("Sorry, You are not allowed to add your own products in cart")
+        }
+
       }
     });
   }
@@ -51,7 +58,8 @@
         }
       });
     }
-    if (quantity > 0){
+    if (quantity == 0){
+      alert(quantity);
       if (confirm('Do you want to remove this item?')) {
         $.ajaxSetup({
           headers: {

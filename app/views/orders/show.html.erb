@@ -39,6 +39,19 @@
   </tr>
   </tbody>
 </table>
+
+
+<% if @order.status == 'draft' || @order.status == 'pending' %>
+
+
+<%= form_with url:  apply_coupon_path(), method: :post do |form| %>
+ <div class="form-group">
+  <input type="text" class="form-control" placeholder="Coupon" name="code">
+  <input type="hidden" name="order_id" value="<%= @order.order_id %>" />
+  <input type="submit" class="btn btn-success mt-1" value="Apply Coupon">
+  </div>
+<% end %>
+
 <%= form_tag charges_path do %>
 <article>
   <% if flash[:error].present? %>
@@ -49,12 +62,16 @@
   <label class="amount">
   <span>Amount: $<%= @order.amount %></span>
   </label>
+  <div class="col-md-4">
+
+  </div>
 </article>
 <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
   data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
   data-description="A month's subscription"
-  data-amount="<%= @order.amount*100 %>"
+  data-amount ="<%= @order.amount*100 %>"
   data-locale="auto"></script>
+<% end %>
 <% end %>
 </div>
 </div>

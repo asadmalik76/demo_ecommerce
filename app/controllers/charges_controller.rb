@@ -11,8 +11,8 @@ class ChargesController < ApplicationController
     if @charge.paid || @charge.status == 'succeeded'
       @order = Order.find_by(order_id: session[:order_id])
       @order.status = 'processing'
-      byebug
       @order.save
+      @cart = session.delete(:cart_id)
       render 'orders/success'
     else
       redirect_to orders_path

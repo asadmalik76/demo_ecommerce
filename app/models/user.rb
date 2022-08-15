@@ -4,7 +4,7 @@
 class User < ApplicationRecord
   attr_accessor :first_name, :last_name
 
-  before_save :set_full_name
+  before_save  :set_full_name
   before_save :set_default_avatar
   has_many :products
   has_one_attached :avatar
@@ -31,4 +31,5 @@ class User < ApplicationRecord
   def last_name
     full_name.split(' ')[1]
   end
+
 end
