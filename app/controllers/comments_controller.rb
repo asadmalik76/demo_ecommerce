@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 class CommentsController < ApplicationController
-
   def index
-    byebug
     @product = Product.find(params[:id])
     @comments = @product.comments
   end
@@ -11,18 +9,22 @@ class CommentsController < ApplicationController
   def new; end
 
   def create
-    @comment = @comments.new(comment_params)
+    @product = Product.find(params[:product_id])
+    @comment = @product.comments.new(comment_params)
     if @comment.save
-      redirect_to @commentable, notice: 'Comment created.'
+      respond_to do |format|
+        format.html { redirect_to product_path(@product.slug) }
+        format.js {}
+      end
     else
-      render :new
+      flash[:alert] = 'Comment failed to save...'
+      redirect_to root_path
     end
   end
 
   private
 
   def comment_params
-    params.require(:comment).permit(:content)
+    params.require(:comment).permit(:content, :product_id)
   end
-
 end

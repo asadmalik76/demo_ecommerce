@@ -4,9 +4,10 @@
 class User < ApplicationRecord
   attr_accessor :first_name, :last_name
 
-  before_save  :set_full_name
+  before_save :set_full_name
   before_save :set_default_avatar
   has_many :products
+  has_many :orders
   has_one_attached :avatar
   has_one :cart
   rolify

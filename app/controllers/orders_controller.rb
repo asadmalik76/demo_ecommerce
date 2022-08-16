@@ -7,7 +7,10 @@ class OrdersController < ApplicationController
   # before_action :set_order, only: %i[create]
   # before_action :load_order, only: %i[show]
 
-  def index; end
+  def index
+    @orders = current_user.orders.all
+    render 'orders/myorders'
+  end
 
   def show
     @order = if params[:order_id].present?
@@ -42,13 +45,20 @@ class OrdersController < ApplicationController
   end
 
   def apply_coupon
-    @coupon = Coupon.find_by(code: coupon_params[:code])
+    @coupon = Coupon.find_by!(code: coupon_params[:code])
     @order = Order.find_by(order_id: coupon_params[:order_id])
     @discount = @order.amount * @coupon.discount
     @order.amount = @order.amount - @discount
     @order.discount = @discount
     @order.save
-    redirect_to order_path(@order, order_id: @order.order_id)
+    render 'orders/show'
+  end
+
+  def destroy
+    @order = Order.find(params[:id])
+    @order.destroy
+    flash[:success] = 'Order Destroyed'
+    redirect_to myorders_path
   end
 
   private
@@ -78,5 +88,6 @@ class OrdersController < ApplicationController
   def coupon_params
     params.permit(:code, :order_id)
   end
+
 
 end

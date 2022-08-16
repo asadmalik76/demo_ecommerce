@@ -13,6 +13,10 @@ class IndexController < ApplicationController
     render 'errors/unauthorized'
   end
 
+  def notfound
+    render 'errors/notfound'
+  end
+
   def all_products; end
 
   def brand_products

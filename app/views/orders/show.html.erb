@@ -31,6 +31,16 @@
   </tr>
   <% end %>
   <tr>
+  <td>Order Amount</td>
+  <td>Discount</td>
+  </tr>
+  <tr>
+  <td><%= number_to_currency(@order.amount+@order.discount ) %></td>
+  <td><%= number_to_currency(@order.discount) %></td>
+  </tr>
+
+
+  <tr>
   <td>Total Amount</td>
   </tr>
   <tr>
@@ -43,14 +53,16 @@
 
 <% if @order.status == 'draft' || @order.status == 'pending' %>
 
+  <% if @order.discount <= 0 %>
+    <%= form_with url:  apply_coupon_path(), method: :post do |form| %>
+    <div class="form-group">
+    <input type="text" class="form-control" placeholder="Coupon" name="code">
+    <input type="hidden" name="order_id" value="<%= @order.order_id %>" />
+    <input type="submit" class="btn btn-success mt-1" value="Apply Coupon">
+    </div>
+    <% end %>
+  <% end %>
 
-<%= form_with url:  apply_coupon_path(), method: :post do |form| %>
- <div class="form-group">
-  <input type="text" class="form-control" placeholder="Coupon" name="code">
-  <input type="hidden" name="order_id" value="<%= @order.order_id %>" />
-  <input type="submit" class="btn btn-success mt-1" value="Apply Coupon">
-  </div>
-<% end %>
 
 <%= form_tag charges_path do %>
 <article>
